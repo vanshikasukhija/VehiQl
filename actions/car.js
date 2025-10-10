@@ -160,7 +160,7 @@ export async function addCar({ carData, images }) {
 
       // Extract the base64 part (remove the data:image/xyz;base64, prefix)
       const base64 = base64Data.split(",")[1];
-      const imageBuffer = Buffer.from(base64, "base64");
+      const imageBuffer = Buffer.from(base64, "base64"); // Converts the remaining Base64 string into a binary buffer, which is required for uploading to Supabase.
 
       // Determine file extension from the data URL
       const mimeMatch = base64Data.match(/data:image\/([a-zA-Z0-9]+);/);
@@ -227,6 +227,15 @@ export async function addCar({ carData, images }) {
 // Fetch all cars with simple search
 export async function getCars(search = "") {
   try {
+    const { userId } = await auth();
+    if (!userId) throw new Error("Unauthorized");
+
+    const user = await db.user.findUnique({
+      where: { clerkUserId: userId },
+    });
+
+    if (!user) throw new Error("User not found");
+
     // Build where conditions
     let where = {};
 
@@ -265,6 +274,12 @@ export async function deleteCar(id) {
   try {
     const { userId } = await auth();
     if (!userId) throw new Error("Unauthorized");
+
+    const user = await db.user.findUnique({
+      where: { clerkUserId: userId },
+    });
+
+    if (!user) throw new Error("User not found");
 
     // First, fetch the car to get its images
     const car = await db.car.findUnique({
@@ -334,6 +349,12 @@ export async function updateCarStatus(id, { status, featured }) {
   try {
     const { userId } = await auth();
     if (!userId) throw new Error("Unauthorized");
+
+    const user = await db.user.findUnique({
+      where: { clerkUserId: userId },
+    });
+
+    if (!user) throw new Error("User not found");
 
     const updateData = {};
 

@@ -33,10 +33,8 @@ export function HomeSearch() {
 
       // Add extracted params to the search
       if (processResult.data.make) params.set("make", processResult.data.make);
-      if (processResult.data.bodyType)
-        params.set("bodyType", processResult.data.bodyType);
-      if (processResult.data.color)
-        params.set("color", processResult.data.color);
+      if (processResult.data.bodyType) params.set("bodyType", processResult.data.bodyType);
+      if (processResult.data.color) params.set("color", processResult.data.color);
 
       // Redirect to search results
       router.push(`/cars?${params.toString()}`);

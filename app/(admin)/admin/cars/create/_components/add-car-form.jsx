@@ -656,7 +656,7 @@ export const AddCarForm = () => {
             <CardHeader>
               <CardTitle>AI-Powered Car Details Extraction</CardTitle>
               <CardDescription>
-                Upload an image of a car and let Gemini AI extract its details.
+                Upload an image of a car and let AI extract its details.
               </CardDescription>
             </CardHeader>
             <CardContent>
